@@ -24,17 +24,26 @@ $currentUser = Auth::user();
         <a class="brand" href="<?= base_url('index.php') ?>"><?= htmlspecialchars($appName) ?></a>
         <nav class="main-nav">
             <a href="<?= base_url('index.php') ?>">Home</a>
-            <?php if ($currentUser && $currentUser['role'] === 'admin'): ?>
-                <a href="<?= base_url('admin/index.php') ?>">Admin</a>
-            <?php endif; ?>
+            <a href="<?= base_url('about.php') ?>">About</a>
+            <a href="<?= base_url('vault.php') ?>">Vault Storage</a>
+            <a href="<?= base_url('shipping.php') ?>">Logistics</a>
+            <a href="<?= base_url('security.php') ?>">Security</a>
+            <a href="<?= base_url('pricing.php') ?>">Pricing</a>
+            <a href="<?= base_url('faq.php') ?>">FAQ</a>
+            <a href="<?= base_url('contact.php') ?>">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <a class="nav-link" href="<?= base_url('tracking.php') ?>">Track Shipment</a>
             <?php if ($currentUser): ?>
-                <a href="<?= base_url('dashboard.php') ?>">My Vault</a>
+                <a class="nav-link" href="<?= base_url('dashboard.php') ?>">My Vault</a>
+                <?php if ($currentUser['role'] === 'admin'): ?>
+                    <a class="nav-link" href="<?= base_url('admin/index.php') ?>">Admin Console</a>
+                <?php endif; ?>
                 <a class="btn btn-secondary" href="<?= base_url('logout.php') ?>">Logout</a>
             <?php else: ?>
-                <a href="<?= base_url('tracking.php') ?>">Track Shipment</a>
-                <a class="btn btn-primary" href="<?= base_url('login.php') ?>">Login</a>
+                <a class="btn btn-primary" href="<?= base_url('login.php') ?>">Client Login</a>
             <?php endif; ?>
-        </nav>
+        </div>
     </div>
 </header>
 <main class="site-main">
