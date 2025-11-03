@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault &amp; Shipping Suite Setup Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #0f172a; margin: 0; }
+        main { width: min(900px, 92vw); margin: 3rem auto; background: #ffffff; border-radius: 20px; padding: 3rem; box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08); }
+        h1 { margin-top: 0; font-size: 2.4rem; }
+        h2 { margin-top: 2.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+        ol, ul { padding-left: 1.5rem; line-height: 1.7; }
+        code { background: #f1f5f9; padding: 0.2rem 0.4rem; border-radius: 6px; font-family: 'Source Code Pro', monospace; }
+        .note { background: rgba(37, 99, 235, 0.1); padding: 1rem; border-radius: 12px; margin-top: 1.5rem; }
+        a { color: #2563eb; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Vault &amp; Shipping Suite</h1>
+        <p>This guide walks you through deploying the portal on a standard cPanel hosting account.</p>
+
+        <h2>1. Requirements</h2>
+        <ul>
+            <li>PHP 8.1 or newer with PDO MySQL extension enabled.</li>
+            <li>MySQL 5.7+ (or MariaDB equivalent).</li>
+            <li>Ability to upload files via File Manager or SFTP.</li>
+        </ul>
+
+        <h2>2. Database setup</h2>
+        <ol>
+            <li>Log in to <strong>cPanel &gt; MySQL Databases</strong> and create a new database, database user, and grant the user <em>All Privileges</em>.</li>
+            <li>Open <strong>phpMyAdmin</strong>, select the new database, and choose the <em>Import</em> tab.</li>
+            <li>Upload and run <code>database/migrations/001_initial_schema.sql</code> from this project to create tables and the default admin user.</li>
+        </ol>
+
+        <h2>3. Configure environment</h2>
+        <ol>
+            <li>Copy <code>.env.example</code> to <code>.env</code> in the project root.</li>
+            <li>Edit the new <code>.env</code> file with the database name, user, password, and the public URL of the app (for example <code>https://yourdomain.com</code>).</li>
+        </ol>
+
+        <h2>4. Upload application</h2>
+        <ol>
+            <li>Download the project folder to your local machine (zip if needed).</li>
+            <li>In cPanel, open <strong>File Manager</strong> and navigate to your target directory (typically <code>public_html</code>).</li>
+            <li>Upload the entire project. Keep the structure so that the <code>public</code> folder contains the web-facing files.</li>
+            <li>If hosting from the domain root, move the contents of <code>public/</code> (not the folder itself) into <code>public_html/</code>. Otherwise, point a subdomain to the <code>public</code> directory.</li>
+        </ol>
+
+        <div class="note">
+            <strong>Tip:</strong> For a main domain, copy the contents of <code>public/</code> into <code>public_html/</code> and keep the remaining folders above web root for security.
+        </div>
+
+        <h2>5. File permissions</h2>
+        <ul>
+            <li>Ensure directories such as <code>storage/</code> are writable (permission 755 or 775).</li>
+            <li>PHP files can remain at 644.</li>
+        </ul>
+
+        <h2>6. First login</h2>
+        <ol>
+            <li>Visit the deployed site and open <code>/login.php</code>.</li>
+            <li>Sign in with the seeded administrator account: <code>admin@example.com</code> / <code>password</code>.</li>
+            <li>Immediately update the password via the database or by creating a new admin from the dashboard.</li>
+        </ol>
+
+        <h2>7. Optional tweaks</h2>
+        <ul>
+            <li>Update the support email link in <code>app/Views/includes/footer.php</code>.</li>
+            <li>Adjust branding in <code>config/app.php</code>.</li>
+            <li>Enable HTTPS in cPanel (for example, Let&apos;s Encrypt) and force secure cookies if available.</li>
+        </ul>
+
+        <p>Need help? Share this guide with your hosting support team for quick onboarding.</p>
+    </main>
+</body>
+</html>
